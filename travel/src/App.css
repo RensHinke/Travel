@@ -1,42 +1,118 @@
 #root {
-  max-width: 1280px;
+  width: 100vw;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+input {
+  width: 20vw;
+  padding: 20px;
+  margin: 5px;
+  border-radius: 50px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchButton {
+  width: 20vw;
+  margin: 5px;
+  background-color: rgb(8, 2, 93);
+  color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.searchButton:hover {
+  outline: 2px solid black;
 }
 
 .card {
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+.tripCard {
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px;
+  margin: 10px 0px;
+  padding: 20px;
+  transition: 0.1s ease-in-out;
+  width: 100%;
+  animation: fade-in 1s;
+}
+
+.tripCard:hover {
+  padding: 30px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.timeTaken {
+  margin-left: 20px;
+  font-weight: lighter;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 30vw;
+}
+
+li {
+  width: 100%;
+}
+
+.columns {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.trains:not(:last-child)::after {
+  content: '•';
+  position: relative;
+}
+
+.details {
+  background-color: rgb(244, 244, 244);
+  height: fit-content;
+  border-left: 10px solid blue;
+  border-radius: 5px;
+  padding: 0px 20px;
+  margin: 12px;
+  animation: fade-in 1s;
+}
+
+.stationAndTrack {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.stationAndTrack span:first-child {
+  margin-right: 20px;
+}
+
+.stationAndTrack span:last-child {
+  margin-left: 20px;
+}
+
+.stationAndTrack::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: -35px;
+  width: 20px;
+  height: 20px;
+  background-image: radial-gradient(white 0%, white 30%, blue 31%, blue 100%);
+  border-radius: 50%;
+}
+
+@keyframes fade-in {
+  0% {margin-left: -25%; opacity: 0;}
+  100% {margin-left: 0%; opacity: 1;}
 }

@@ -14,10 +14,6 @@ function Details({tripDetails}) {
         }
     }
 
-    useEffect(i => {
-        console.log(tripDetails)
-        //startDate = (tripDetails.legs[0].origin.hasOwnProperty("actualDateTime")) ? tripDetails.legs[0].origin.actualDateTime : tripDetails.legs[0].origin.plannedDateTime;
-    })
     if (tripDetails != null) {
         return (
             <div className="details">

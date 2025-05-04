@@ -13,15 +13,12 @@ function App() {
   const [currentlySelectedTrip, setCurrentlySelectedTrip] = useState(null)
   const [stations, setStations] = useState([])
   const [errorOccured, setErrorOccured] = useState(false)
-  let apiTrips = 0
 
   useEffect(() => {
     let ignore = false;
     
     if (!ignore) {
       sendRequestStations()
-      apiTrips++
-      console.log(apiTrips)
     }
     return () => { ignore = true; }
     },[]);
@@ -68,7 +65,8 @@ function App() {
   }
 
   function validateInputs() {
-    return (stations.includes(filterText1) && stations.includes(filterText2))
+    return stations.map(e => e.toUpperCase()).includes(filterText1.toUpperCase()) && 
+    (stations.map(e => e.toUpperCase()).includes(filterText2.toUpperCase()))
   }
 
   return (

@@ -8,9 +8,11 @@ function App() {
   const [filterText1, setFilterText1] = useState("")
   const [filterText2, setFilterText2] = useState("")
   const [loading, setLoading] = useState(true)
+  const [hasSendRequest, setHasSendRequest] = useState(false)
   const [trips, setTrips] = useState([])
   const [currentlySelectedTrip, setCurrentlySelectedTrip] = useState(null)
   const [stations, setStations] = useState([])
+  const [errorOccured, setErrorOccured] = useState(false)
   let apiTrips = 0
 
   useEffect(() => {
@@ -41,6 +43,7 @@ function App() {
   }
 
   function sendRequest() {
+    setHasSendRequest(true)
     fetch(`https://nodejs-serverless-function-express-six-liard.vercel.app/api/hello?fromStation=${filterText1}&toStation=${filterText2}`, {
       method: 'GET'
     })
@@ -54,9 +57,18 @@ function App() {
   }
 
   function sendRequestAndResetDetails() {
-    setCurrentlySelectedTrip(null)
-    setTrips([])
-    sendRequest()
+    if (validateInputs()) {
+      setCurrentlySelectedTrip(null)
+      setTrips([])
+      sendRequest()
+      setErrorOccured(false)
+    } else {
+      setErrorOccured(true)
+    }
+  }
+
+  function validateInputs() {
+    return (stations.includes(filterText1) && stations.includes(filterText2))
   }
 
   return (
@@ -73,11 +85,17 @@ function App() {
           handleClick2={setFilterText2} />
         <button className={!loading ? "searchButton searchButtonInverted" : "searchButton"} type="button" onClick={sendRequestAndResetDetails}>Bereken reis</button>
       </div>
+      {errorOccured &&
+        <div className="error">Er zijn niet geldige stations ingevoerd</div>
+      }
       {!loading && 
         <div className='columns'>
           <TripsData listOfTrips={trips} handleClick={handleClick}/>
           <Details tripDetails={currentlySelectedTrip} />
         </div>
+      }
+      {((loading && hasSendRequest) || (!loading && trips.length == 0)) && currentlySelectedTrip == null &&
+        <div className="loaderCircle"></div>
       }
     </>
   )

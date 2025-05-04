@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import TopBar from './TopBar'
 import TripsData from './TripsData'
@@ -10,9 +10,34 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [trips, setTrips] = useState([])
   const [currentlySelectedTrip, setCurrentlySelectedTrip] = useState(null)
+  const [stations, setStations] = useState([])
+  let apiTrips = 0
+
+  useEffect(() => {
+    let ignore = false;
+    
+    if (!ignore) {
+      sendRequestStations()
+      apiTrips++
+      console.log(apiTrips)
+    }
+    return () => { ignore = true; }
+    },[]);
 
   function handleClick(trip) {
     setCurrentlySelectedTrip(trip)
+  }
+
+  function sendRequestStations() {
+    fetch(`https://nodejs-serverless-function-express-six-liard.vercel.app/api/stations`, {
+      method: 'GET'
+    })
+    .then(response => response.text())
+    .then(response => {
+      let data = JSON.parse(JSON.parse(response))
+      setStations(data.payload.map(e => e.namen.lang))
+    })
+    .catch(err => console.error(err));
   }
 
   function sendRequest() {
@@ -28,33 +53,34 @@ function App() {
     .catch(err => console.error(err));
   }
 
-  if (loading) {
-    return (
-      <>
-        <TopBar 
+  function sendRequestAndResetDetails() {
+    setCurrentlySelectedTrip(null)
+    setTrips([])
+    sendRequest()
+  }
+
+  return (
+    <>
+      <div className={!loading? "topBarLoaded" : "topBar"}>
+        <TopBar
           filterText1={filterText1}
           onFilterTextChange1={setFilterText1}
           filterText2={filterText2}
-          onFilterTextChange2={setFilterText2} />
-        <button className="searchButton" type="button" onClick={sendRequest}>Bereken reis</button>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <TopBar 
-          filterText1={filterText1}
-          onFilterTextChange1={setFilterText1}
-          filterText2={filterText2}
-          onFilterTextChange2={setFilterText2} />
-        <button className="searchButton" type="button" onClick={sendRequest}>Bereken reis</button>
+          onFilterTextChange2={setFilterText2}
+          isLoaded={loading}
+          stations={stations}
+          handleClick1={setFilterText1}
+          handleClick2={setFilterText2} />
+        <button className={!loading ? "searchButton searchButtonInverted" : "searchButton"} type="button" onClick={sendRequestAndResetDetails}>Bereken reis</button>
+      </div>
+      {!loading && 
         <div className='columns'>
           <TripsData listOfTrips={trips} handleClick={handleClick}/>
           <Details tripDetails={currentlySelectedTrip} />
         </div>
-      </>
-    )
-  }
+      }
+    </>
+  )
 }
 
 export default App

@@ -5,11 +5,46 @@
   text-align: center;
 }
 
-input {
+.topBarLoaded {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(0, 47, 89);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.arrow {
+  font-size: 3rem;
+  color: white;
+}
+
+form {
+  width: fit-content;
+  margin: auto;
+}
+
+input, .suggestionsDropdown {
   width: 20vw;
   padding: 20px;
+}
+
+input {
   margin: 5px;
   border-radius: 50px;
+}
+
+input:focus {
+  border-radius: 0;
+}
+
+.suggestionsDropdown {
+  display: flex;
+  flex-direction: column;
+  margin: -25px auto;
+  position: absolute;
+  z-index: 10;
 }
 
 .searchButton {
@@ -21,6 +56,11 @@ input {
 
 .searchButton:hover {
   outline: 2px solid black;
+}
+
+.searchButtonInverted {
+  background-color: white;
+  color: rgb(8, 2, 93);
 }
 
 .card {
@@ -35,7 +75,7 @@ input {
   padding: 20px;
   transition: 0.1s ease-in-out;
   width: 100%;
-  animation: fade-in 1s;
+  animation: fade-in 0.7s;
 }
 
 .tripCard:hover {
@@ -68,6 +108,8 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  background-color: rgb(246, 250, 255);
+  border-radius: 12px;
 }
 
 .trains:not(:last-child)::after {
@@ -76,13 +118,13 @@ li {
 }
 
 .details {
-  background-color: rgb(244, 244, 244);
+  background-color: white;
   height: fit-content;
-  border-left: 10px solid blue;
+  border-left: 10px solid rgb(0, 47, 89);
   border-radius: 5px;
   padding: 0px 20px;
   margin: 12px;
-  animation: fade-in 1s;
+  animation: fade-in 0.7s;
 }
 
 .stationAndTrack {
@@ -108,7 +150,7 @@ li {
   left: -35px;
   width: 20px;
   height: 20px;
-  background-image: radial-gradient(white 0%, white 30%, blue 31%, blue 100%);
+  background-image: radial-gradient(white 0%, white 30%, rgb(0, 47, 89) 31%, rgb(0, 47, 89) 100%);
   border-radius: 50%;
 }
 

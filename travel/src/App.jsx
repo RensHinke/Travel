@@ -70,8 +70,8 @@ function App() {
   }
 
   return (
-    <>
-      <div className={!loading? "topBarLoaded" : "topBar"}>
+    <div className={!loading ? "minHeightFull" : ""}>
+      <div className={!loading ? "topBarLoaded" : "topBar"}>
         <TopBar
           filterText1={filterText1}
           onFilterTextChange1={setFilterText1}
@@ -86,16 +86,16 @@ function App() {
       {errorOccured &&
         <div className="error">Er zijn niet geldige stations ingevoerd</div>
       }
-      {!loading && 
+      {!loading && trips.length != 0 && 
         <div className='columns'>
-          <TripsData listOfTrips={trips} handleClick={handleClick}/>
+          <TripsData listOfTrips={trips} handleClick={handleClick} currentlySelectedTrip={currentlySelectedTrip} />
           <Details tripDetails={currentlySelectedTrip} />
         </div>
       }
       {((loading && hasSendRequest) || (!loading && trips.length == 0)) && currentlySelectedTrip == null &&
         <div className="loaderCircle"></div>
       }
-    </>
+    </div>
   )
 }
 

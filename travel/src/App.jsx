@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import './App.css'
 import TopBar from './TopBar'
 import TripsData from './TripsData'
@@ -88,8 +89,18 @@ function App() {
       }
       {!loading && trips.length != 0 && 
         <div className='columns'>
-          <TripsData listOfTrips={trips} handleClick={handleClick} currentlySelectedTrip={currentlySelectedTrip} />
-          <Details tripDetails={currentlySelectedTrip} />
+          {isBrowser &&
+            <>
+              <TripsData listOfTrips={trips} handleClick={handleClick} currentlySelectedTrip={currentlySelectedTrip} />
+              <Details tripDetails={currentlySelectedTrip} />
+            </>
+          }
+          {isMobile &&
+            <>
+              <Details tripDetails={currentlySelectedTrip} />
+              <TripsData listOfTrips={trips} handleClick={handleClick} currentlySelectedTrip={currentlySelectedTrip} />
+            </>
+          }
         </div>
       }
       {((loading && hasSendRequest) || (!loading && trips.length == 0)) && currentlySelectedTrip == null &&

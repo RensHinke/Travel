@@ -196,3 +196,30 @@ li {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media (max-width: 600px) {
+  #root {
+    padding: 0px;
+  }
+
+  .topBarLoaded {
+    flex-direction: column;
+  }
+
+  input {
+    width: 50vw;
+  }
+
+  .searchButton, .suggestionsDropdown {
+    width: 50%;
+  }
+
+  .columns {
+    flex-direction: column;
+  }
+  
+
+  ul {
+    width: 100%;
+  }
+}
